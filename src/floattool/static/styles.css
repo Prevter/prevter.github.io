@@ -1,0 +1,93 @@
+.flexGrid {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    flex: 42%;
+}
+
+.column2 {
+    flex: 58%;
+}
+
+.mainContainer {
+    padding: 0 24px;
+}
+
+.benchmark-bar {
+    background-color: #383838;
+    border-radius: 8px;
+    height: 32px;
+    margin-bottom: 10px;
+    padding: 0px;
+    margin: 2px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.benchmark-bar-progress {
+    border-radius: 8px;
+    height: 32px;
+    transition: width 0.6s ease;
+}
+
+.benchmark-bar-progress.intel {
+    background: rgb(0, 125, 195);
+    background: linear-gradient(90deg, rgba(0, 125, 195, 1) 50%, rgba(21, 144, 216, 1) 100%);
+}
+
+.benchmark-bar-progress.amd {
+    background: rgb(182, 29, 28);
+    background: linear-gradient(90deg, rgba(182, 29, 28, 1) 50%, rgba(237, 82, 77, 1) 100%);
+}
+
+.benchmark-bar-name {
+    font-size: 14px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.benchmark-bar-caption {
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.benchmark-bar-multiscore {
+    font-size: 12px;
+    margin: 2px 0 -2px 0;
+    padding: 0;
+}
+
+.benchmark-bar-singlescore {
+    font-size: 11px;
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .benchmark-bar-name {
+        font-size: 12px;
+    }
+
+    .benchmark-bar-caption {
+        font-size: 8px;
+    }
+
+    .flexGrid {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .centerOnMobile {
+        text-align: center !important;
+        margin: 0;
+        padding: 0;
+    }
+    .column {
+        margin: 10px;
+        text-align: center;
+    }
+    .mainContainer {
+        padding: 0 4px;
+    }
+}
