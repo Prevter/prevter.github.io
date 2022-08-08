@@ -2,6 +2,11 @@ module.exports = {
     load: function (req, res, db, callback) {
         let response = { status: 200 };
         let sql = "SELECT * FROM FloatTool_Benchmarks";
+
+        if (req.query.version) {
+            sql += " WHERE Version = '" + req.query.version + "'";
+        }
+
         db.all(sql, (err, rows) => {
             if (err) {
                 console.log(err);

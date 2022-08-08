@@ -111,16 +111,13 @@ function Home() {
                 </Grid>
                 <Grid item sm={4}>
                     <Card elevation={3} sx={{ minHeight: 326 }}>
-                        {/* 
-                        TODO: Make new screenshot
                         <CardMedia
                             component="img"
                             image={AppScreenshots[3]}
-                            alt="FloatTool screenshot 2"
+                            alt="Crafted CS:GO skin with 0.25 float"
                             onClick={() => { currentImage = AppScreenshots[3]; handleClickOpen(); }}
                         /> 
-                        */}
-                        <Skeleton variant="rectangular" width={380} height={180} animation="wave" />
+                        {/* <Skeleton variant="rectangular" width={380} height={180} animation="wave" /> */}
                         <CardContent>
                             <Typography component="p"
                                 variant="h5"
