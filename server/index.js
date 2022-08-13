@@ -2,10 +2,11 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const api = require("./api");
-const sqlite3 = require('sqlite3');
-const { Client, Pool } = require('pg');
+const { Pool } = require('pg');
+var cors = require("cors");
 
 const connectString = process.env.DATABASE_URL;
+const port = process.env.PORT || 80;
 
 const db = new Pool({
     connectionString: connectString,
@@ -19,8 +20,7 @@ db.on('error', (err, client) => {
     process.exit(-1)
 })
 
-const port = process.env.PORT || 80;
-
+app.use(cors());
 app.use(express.static(path.join(__dirname, "..", "build")));
 
 app.get("/api/:app/:apiMethod", async (req, res) => {

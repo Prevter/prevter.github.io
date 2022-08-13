@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, Container, CardContent, Typography, Skeleton, LinearProgress } from "@mui/material";
+import { Card, Container, CardContent, Typography, Skeleton } from "@mui/material";
 
 import BenchmarkBar from '../components/benchmark-bar';
 

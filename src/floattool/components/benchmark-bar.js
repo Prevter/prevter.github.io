@@ -1,5 +1,3 @@
-import { Grid } from "@mui/material";
-
 export default function BenchmarkBar(params) {
     const { benchmark, percent } = params;
 
