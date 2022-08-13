@@ -1,22 +1,22 @@
 module.exports = {
     load: function (req, res, db, callback) {
         let response = { status: 200 };
-        let sql = "SELECT * FROM FloatTool_Benchmarks";
+        let sql = 'SELECT * FROM "FloatTool_Benchmarks"';
 
         if (req.query.version) {
-            sql += " WHERE Version = '" + req.query.version + "'";
+            sql += " WHERE version = '" + req.query.version + "'";
         }
 
-        db.all(sql, (err, rows) => {
+        db.query(sql, (err, res) => {
             if (err) {
                 console.log(err);
                 response.status = 500;
                 response.message = "Error loading benchmarks";
                 callback(response);
             } else {
-                response.count = rows.length;
+                response.count = res.rows.length;
                 let benchmarks = [];
-                rows.forEach((row) => {
+                res.rows.forEach((row) => {
                     benchmarks.push({
                         name: row.cpu_name,
                         threads: row.threads,
@@ -51,7 +51,7 @@ module.exports = {
         // Else get version string from user-agent
         let version = req.headers['user-agent'].split("/")[1];
 
-        let sql = "INSERT INTO FloatTool_Benchmarks (cpu_name, threads, speed_multi, speed_single, version) VALUES (?, ?, ?, ?, ?)";
+        let sql = 'INSERT INTO "FloatTool_Benchmarks"(cpu_name, threads, speed_multi, speed_single, version) VALUES($1, $2, $3, $4, $5)';
         let values = [req.query.cpu, req.query.threads, req.query.multicore, req.query.singlecore, version];
 
         // if any of the values are missing, return error
@@ -63,16 +63,17 @@ module.exports = {
         }
 
         // if there is already a row with the same cpu name and version, update it if the new values are better
-        db.get("SELECT * FROM FloatTool_Benchmarks WHERE cpu_name = ? AND version = ?", [req.query.cpu, version], (err, row) => {
-            if (err) {
+        db.query('SELECT * FROM "FloatTool_Benchmarks" WHERE cpu_name=$1 AND version=$2', [req.query.cpu, version], (err, res) => {
+            if (err) { // Error querying database
                 console.log(err);
                 response.status = 500;
                 response.message = "Error loading benchmarks";
                 callback(response);
-            } else if (row) {
-                if (row.speed_multi < req.query.multicore) {
-                    let sql = "UPDATE FloatTool_Benchmarks SET speed_multi = ?, speed_single = ? WHERE cpu_name = ? AND version = ?";
-                    db.run(sql, [req.query.multicore, req.query.singlecore], (err) => {
+            } else if (res.rows[0]) { // Value already exists in database
+                if (res.rows[0].speed_multi < req.query.multicore) {
+                    let sql = 'UPDATE "FloatTool_Benchmarks" SET speed_multi=$1, speed_single=$2 WHERE cpu_name=$3 AND version=$4';
+                    let values = [req.query.multicore, req.query.singlecore, req.query.cpu, version];
+                    db.query(sql, values, (err) => {
                         if (err) {
                             console.log(err);
                             response.status = 500;
@@ -87,8 +88,8 @@ module.exports = {
                     response.message = "Benchmark already exists";
                     callback(response);
                 }
-            } else {
-                db.run(sql, values, (err) => {
+            } else { // Value does not exist in database
+                db.query(sql, values, (err) => {
                     if (err) {
                         console.log(err);
                         response.status = 500;

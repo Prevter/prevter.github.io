@@ -3,19 +3,23 @@ const express = require("express");
 const app = express();
 const api = require("./api");
 const sqlite3 = require('sqlite3');
+const { Client, Pool } = require('pg');
+
+const connectString = process.env.DATABASE_URL;
+
+const db = new Pool({
+    connectionString: connectString,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+db.on('error', (err, client) => {
+    console.error('Unexpected error on idle client', err)
+    process.exit(-1)
+})
 
 const port = process.env.PORT || 80;
-
-const db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) => {
-    if (err && err.code === "SQLITE_CANTOPEN") {
-        console.log("Could not open database");
-        return;
-    } else if (err) {
-        console.log("Getting error " + err);
-        return;
-    }
-    console.log("Database opened successfully");
-});
 
 app.use(express.static(path.join(__dirname, "..", "build")));
 
