@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Card, Container, CardContent, Typography, Skeleton, Grid } from "@mui/material";
 
+import Grid2 from '@mui/material/Unstable_Grid2';
+
 import CollectionCard from '../components/collection-card';
 
 const exceptions = ["The Blacksite Collection"];
@@ -52,7 +54,7 @@ function Table() {
             </Container>
             <p>
                 {loading && <Container maxWidth="md">
-                    <Grid container spacing={3}>
+                    <Grid container spacing={1}>
                         <Grid item xs={12} md={4} xl={4}>
                             <Skeleton variant="rectangular" />
                         </Grid>
@@ -68,7 +70,7 @@ function Table() {
                     <div style={{ textAlign: 'center' }}>{`Error: ${error}`}</div>
                 )}
 
-                <Grid container spacing={3}>
+                <Grid2 container spacing={0.5}>
                     {
                         data &&
                         // eslint-disable-next-line array-callback-return
@@ -77,14 +79,14 @@ function Table() {
                             console.log(exceptions.includes(item.Name));
                             if (!exceptions.includes(item.Name)) {
                                 return (
-                                    <Grid item xs={12} md={6} lg={4} xl={3}>
+                                    <Grid2 xs={12} md={6} lg={4} xl={3}>
                                         <CollectionCard collection={item} />
-                                    </Grid>
+                                    </Grid2>
                                 )
                             }
                         })
                     }
-                </Grid>
+                </Grid2>
             </p>
         </Container>
     );

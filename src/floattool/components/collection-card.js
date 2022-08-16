@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, CardContent, CardMedia, Typography, Grid, Tooltip, tooltipClasses, Button } from "@mui/material";
+import { Card, CardContent, CardMedia, CardActions, Typography, Grid, Tooltip, tooltipClasses, Button } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
 const colorCodes = {
@@ -102,7 +102,7 @@ export default function CollectionCard(params) {
                 }} />
             </CardMedia>
             <CardContent>
-                <Typography variant="h5" component="h4" textAlign={'center'}>
+                <Typography variant="h5" component="h4" textAlign={'center'} fontSize={'20px'}>
                     {collection.Name}
                 </Typography>
                 <Typography variant="p" component="p" fontWeight={'regular'}>
@@ -112,18 +112,15 @@ export default function CollectionCard(params) {
                     {getRarity("MilSpec", skinsByRarity)}
                     {getRarity("Industrial", skinsByRarity)}
                 </Typography>
-
-                <Typography variant="p" component="p" fontWeight={'regular'} textAlign={'center'}>
-                    <Button
-                        size="small"
-                        variant="outlined" color="secondary"
-                        style={{ textAlign: 'center', marginTop: '8px' }}
-                        href={collection.Link}>
-                        Details &raquo;
-                    </Button>
-                </Typography>
-
             </CardContent>
+            <CardActions>
+                <Button
+                    size="small" color="secondary"
+                    style={{ textAlign: 'center' }}
+                    href={collection.Link}>
+                    Details &raquo;
+                </Button>
+            </CardActions>
         </Card>
     );
 }
