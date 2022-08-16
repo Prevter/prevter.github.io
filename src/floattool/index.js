@@ -5,7 +5,7 @@ import { Typography, Container, Paper, Card, CardContent } from '@mui/material';
 import Header from './components/header';
 import Footer from './components/footer';
 
-import { Home, Benchmarks } from './pages';
+import { Home, Benchmarks, Table } from './pages';
 
 import './static/styles.css';
 
@@ -20,8 +20,8 @@ export default function FloatTool() {
                     <Route path="*" element={<NotFoundPage />} />
                     <Route path="/" element={<Home />} />
                     {/* <Route path="tutorial" element={<Table />} />
-                <Route path="faq" element={<Table />} />
-                <Route path="table" element={<Table />} /> */}
+                <Route path="faq" element={<Table />} /> */}
+                <Route path="table" element={<Table />} />
                     <Route path="benchmarks" element={<Benchmarks />} />
                     {/* <Route path="themes" element={<Table />} />
                 <Route path="tools" element={<Table />} /> */}

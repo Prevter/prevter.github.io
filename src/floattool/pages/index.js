@@ -1,4 +1,5 @@
 import Home from './home';
 import Benchmarks from './benchmarks';
+import Table from './table';
 
-export { Home, Benchmarks };
+export { Home, Benchmarks, Table };

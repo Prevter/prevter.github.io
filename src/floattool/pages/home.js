@@ -8,10 +8,7 @@ import {
     Card,
     CardContent,
     CardMedia,
-    Dialog,
-    DialogContent,
-    DialogActions,
-    Skeleton
+    Backdrop
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -116,7 +113,7 @@ function Home() {
                             image={AppScreenshots[3]}
                             alt="Crafted CS:GO skin with 0.25 float"
                             onClick={() => { currentImage = AppScreenshots[3]; handleClickOpen(); }}
-                        /> 
+                        />
                         {/* <Skeleton variant="rectangular" width={380} height={180} animation="wave" /> */}
                         <CardContent>
                             <Typography component="p"
@@ -142,21 +139,13 @@ function ImagePopup(params) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
-        <Dialog
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={params.open}
-            onClose={params.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            fullWidth={true}
-            fullScreen={fullScreen}
-            maxWidth='md'>
-            <DialogContent>
-                <img src={currentImage} style={{ width: '100%' }} />
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={params.handleClose}>Close</Button>
-            </DialogActions>
-        </Dialog>
+            onClick={params.handleClose}
+        >
+            <img src={currentImage} style={{ width: fullScreen ? '95%' : '80%' }} alt="Enlarged" />
+        </Backdrop>
     );
 }
 
