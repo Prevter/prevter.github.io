@@ -75,8 +75,6 @@ function Table() {
                         data &&
                         // eslint-disable-next-line array-callback-return
                         data.map((item, index) => {
-                            console.log(item)
-                            console.log(exceptions.includes(item.Name));
                             if (!exceptions.includes(item.Name)) {
                                 return (
                                     <Grid2 xs={12} md={6} lg={4} xl={3}>

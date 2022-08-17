@@ -34,8 +34,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     },
 }));
 
-function getRarity(rarity, skins) {
-    if (skins[rarity]) {
+function getRarity(rarity, skins, minRarity) {
+    if (skins[rarity] && rarity !== minRarity) {
         let splitted = splitByRange(skins[rarity])
         let totalCount = skins[rarity].length;
 
@@ -106,11 +106,12 @@ export default function CollectionCard(params) {
                     {collection.Name}
                 </Typography>
                 <Typography variant="p" component="p" fontWeight={'regular'}>
-                    {getRarity("Covert", skinsByRarity)}
-                    {getRarity("Classified", skinsByRarity)}
-                    {getRarity("Restricted", skinsByRarity)}
-                    {getRarity("MilSpec", skinsByRarity)}
-                    {getRarity("Industrial", skinsByRarity)}
+                    {getRarity("Covert", skinsByRarity, collection.LowestRarity)}
+                    {getRarity("Classified", skinsByRarity, collection.LowestRarity)}
+                    {getRarity("Restricted", skinsByRarity, collection.LowestRarity)}
+                    {getRarity("Mil-Spec", skinsByRarity, collection.LowestRarity)}
+                    {getRarity("Industrial", skinsByRarity, collection.LowestRarity)}
+                    {getRarity("Consumer", skinsByRarity, collection.LowestRarity)}
                 </Typography>
             </CardContent>
             <CardActions>
