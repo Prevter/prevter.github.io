@@ -4,6 +4,7 @@ const app = express();
 const api = require("./api");
 const { Pool } = require('pg');
 var cors = require("cors");
+const { editStatic } = require("./editStatic");
 require('dotenv').config({ path: '../.env.local' });
 
 const connectString = process.env.DATABASE_URL;
@@ -21,8 +22,26 @@ db.on('error', (err, client) => {
     process.exit(-1)
 })
 
+const routes = {
+    "/floattool": {
+        "__TITLE__": "FloatTool",
+        "__DESCRIPTION__": "Utility to create any float for your CS:GO skins.",
+        "__THEME_COLOR__": "#f24941",
+        "__PROJECT_DIR__": "/floattool",
+        "__EMBED_IMAGE__": "/floattool/embed.png",
+    },
+    "/": {
+        "__TITLE__": "Prevter's Stuff",
+        "__DESCRIPTION__": "A place for all my projects",
+        "__THEME_COLOR__": "#00bcd4",
+        "__PROJECT_DIR__": "",
+        "__EMBED_IMAGE__": "/embed.png",
+    }
+}
+
 app.use(cors());
-app.use(express.static(path.join(__dirname, "..", "build")));
+// custom middleware to edit static files before serving them
+app.use(editStatic(path.join(__dirname, "..", "build"), routes)); 
 
 app.get("/api/:app/:apiMethod", async (req, res) => {
     if (api[req.params.app] && api[req.params.app][req.params.apiMethod]) {
